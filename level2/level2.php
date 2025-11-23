@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ทดสอบ iQ ปอ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="level2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Mitr:wght@200;300;400;500;600;700&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+
+<body class="min-h-screen flex items-center justify-center"
+    style="background: linear-gradient(
+    to bottom,
+    #cc3366bd 0%,
+    #d64b79be 30%,
+    #e67899be 70%,
+    #F3AFC6 90%,
+    #ffffff 100%
+);">
+
+    <div class="w-full h-screen flex items-center justify-center relative">
+
+        <div class="lock-area relative z-10">
+            <div id="shackle" class="lock-shackle"></div>
+
+            <div class="lock-body flex items-center justify-center">
+                <div class="flex gap-2 -mt-9">
+
+                    <div class="digit-box">
+                        <div class="digit-inner">
+                            <div>0</div>
+                            <div>1</div>
+                            <div>2</div>
+                            <div>3</div>
+                            <div>4</div>
+                            <div>5</div>
+                            <div>6</div>
+                            <div>7</div>
+                            <div>8</div>
+                            <div>9</div>
+                        </div>
+                    </div>
+
+                    <div class="digit-box">
+                        <div class="digit-inner">
+                            <div>0</div>
+                            <div>1</div>
+                            <div>2</div>
+                            <div>3</div>
+                            <div>4</div>
+                            <div>5</div>
+                            <div>6</div>
+                            <div>7</div>
+                            <div>8</div>
+                            <div>9</div>
+                        </div>
+                    </div>
+
+                    <div class="digit-box">
+                        <div class="digit-inner">
+                            <div>0</div>
+                            <div>1</div>
+                            <div>2</div>
+                            <div>3</div>
+                            <div>4</div>
+                            <div>5</div>
+                            <div>6</div>
+                            <div>7</div>
+                            <div>8</div>
+                            <div>9</div>
+                        </div>
+                    </div>
+
+                    <div class="digit-box">
+                        <div class="digit-inner">
+                            <div>0</div>
+                            <div>1</div>
+                            <div>2</div>
+                            <div>3</div>
+                            <div>4</div>
+                            <div>5</div>
+                            <div>6</div>
+                            <div>7</div>
+                            <div>8</div>
+                            <div>9</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- NOTE อยู่ข้างหลังตอนเริ่ม -->
+        <div class="note-body absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+                flex items-center justify-center z-0 pointer-events-none">
+
+            <div class="triangle-right"></div>
+            <div class="triangle-left"></div>
+            <div class="triangle-top"></div>
+
+            <div class="note">
+                <div class="notelevel3 flex flex-col items-center justify-center w-full">
+                    <h1 class="text-xl font-bold mb-6 mt-3 text-center"></h1>
+                    <p class="text-xs font-medium mb-4 -mt-5 text-left w-full leading-snug px-5"></p>
+                    <button class="inline-block rounded-full bg-[#ffffff] w-[125px] h-[35px] mt-8 ml-[70px] font-bold 
+        text-[#FF0000] text-right leading-[35px]
+        transition-all duration-300 ease-out
+        hover:scale-110 
+        cursor-pointer">
+                        ต่อไป
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <script>
+            const correctCode = [2, 4, 0, 8];
+            const boxes = document.querySelectorAll(".digit-box");
+            const shackle = document.getElementById("shackle");
+            const lockBody = document.querySelector(".lock-body");
+            const triangleTop = document.querySelector(".triangle-top");
+            const note = document.querySelector(".note");
+            const button = note.querySelector("button");
+            const h1 = note.querySelector("h1");
+            const p = note.querySelector("p");
+
+            // เริ่มซ่อนปุ่ม
+            button.classList.remove("show");
+
+            // ฟังก์ชันพิมพ์ทีละตัวอักษร
+            function typeText(element, text, speed = 50, callback) {
+                element.textContent = "";
+                let i = 0;
+                const interval = setInterval(() => {
+                    element.textContent += text[i];
+                    i++;
+                    if (i >= text.length) {
+                        clearInterval(interval);
+                        if (callback) callback();
+                    }
+                }, speed);
+            }
+
+            // กดปุ่มไปต่อ
+            button.addEventListener("click", () => {
+                // ซ่อนปุ่มทันที
+                button.classList.remove("show");
+                button.style.display = "none";
+
+                // ลบข้อความเก่า
+                h1.textContent = "";
+                p.textContent = "";
+
+                // ปรับสไตล์ h1 ใหม่
+                h1.style.fontSize = "1rem"; // ขนาดตัวอักษร
+                h1.style.color = "#FF0000"; // สีตัวอักษร
+                h1.style.textAlign = "left"; // ตำแหน่งแนวนอน
+                h1.style.marginTop = "80px"; // ระยะจากบน
+                h1.style.fontWeight = "bold"; // น้ำหนักตัวอักษร
+
+                // แสดงข้อความใหม่ พร้อม typewriter
+                typeText(h1, "เป็นแฟนกันมั้ย", 75);
+            });
+
+            // เลขล็อก
+            boxes.forEach(box => {
+                const inner = box.querySelector(".digit-inner");
+                let currentNum = 0;
+                box.addEventListener("click", () => {
+                    currentNum = (currentNum + 1) % 10;
+                    inner.style.transform = `translateY(-${currentNum*50}px)`;
+                    checkCode();
+                });
+            });
+
+            function checkCode() {
+                const current = Array.from(boxes).map(box => {
+                    const style = box.querySelector(".digit-inner").style.transform;
+                    const match = style.match(/translateY\(-(\d+)px\)/);
+                    return match ? parseInt(match[1]) / 50 : 0;
+                });
+
+                if (current.every((num, i) => num === correctCode[i])) {
+                    shackle.classList.add("unlocked");
+
+                    shackle.addEventListener("animationend", function onShackleUp(e) {
+                        if (e.animationName === "shackleUp") {
+                            shackle.classList.add("fall");
+                            lockBody.classList.add("fall");
+                            shackle.removeEventListener("animationend", onShackleUp);
+                        }
+                    });
+
+                    shackle.addEventListener("animationend", function onShackleFall(e) {
+                        if (e.animationName === "shackleFall") {
+                            triangleTop.classList.add("open");
+
+                            triangleTop.addEventListener("transitionend", function onTransition() {
+                                note.classList.add("move-up");
+                                triangleTop.style.zIndex = "7";
+                                triangleTop.removeEventListener("transitionend", onTransition);
+
+                                note.addEventListener("animationend", function onNoteEnd() {
+                                    // พิมพ์ข้อความทีละตัว
+                                    typeText(h1, "ยินดีด้วยผ่าน Level2 แล้ว", 50, () => {
+                                        typeText(p, "ต่อไปจะเป็น Level3 และเป็นด่านสุดท้ายเป็นคำถามง่ายๆ พร้อมแล้วกดไปต่อ", 25, () => {
+                                            button.classList.add("show"); // ข้อความครบแล้ว โชว์ปุ่ม
+                                        });
+                                    });
+
+                                    note.removeEventListener("animationend", onNoteEnd);
+                                });
+                            });
+                        }
+                    });
+                }
+            }
+        </script>
+
+
+
+</body>
+
+</html>
