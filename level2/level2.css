@@ -191,7 +191,6 @@ body {
 .triangle-top.open {
     transform: rotateX(0deg);
 }
-
 .note {
     width: 280px;
     height: 200px;
